@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cloud, MapPin, Loader2, Menu, X, SunMedium, Laptop, Smartphone } from 'lucide-react';
+import { Cloud, MapPin, Loader2 } from 'lucide-react';
 
 export const Header = ({
   activePage,
@@ -7,11 +7,8 @@ export const Header = ({
   unit,
   setUnit,
   onUseCurrentLocation,
-  isLocating,
-  viewMode = 'auto',
-  setViewMode
+  isLocating
 }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
 
   React.useEffect(() => {
@@ -32,18 +29,13 @@ export const Header = ({
     }
   };
 
-  const handleNavClick = (page) => {
-    setActivePage(page);
-    setMobileMenuOpen(false);
-  };
-
   return (
     <header className="header">
       <div className="header-container">
         {/* SkyCast Brand */}
-        <div className="brand" onClick={() => handleNavClick('home')}>
+        <div className="brand" onClick={() => setActivePage('home')}>
           <div className="brand-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path
                 d="M6.5 18C4.01472 18 2 15.9853 2 13.5C2 11.2398 3.66986 9.36952 5.86475 9.04943C6.3986 6.1775 8.8986 4 11.9 4C15.352 4 18.15 6.798 18.15 10.25C18.15 10.5342 18.131 10.8139 18.0939 11.0882C20.298 11.5361 22 13.4862 22 15.8C22 18.451 19.851 20.6 17.2 20.6L6.5 20.6"
                 stroke="#ffffff"
@@ -54,29 +46,32 @@ export const Header = ({
               <circle cx="16" cy="8" r="2.5" fill="#fbbf24" />
             </svg>
           </div>
-          <div>
+          <div className="brand-text-wrap">
             <span className="brand-title">SkyCast</span>
             <span className="brand-badge">LIVE</span>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links (Laptop / Desktop only) */}
         <nav className="nav-links">
           <button
+            type="button"
             className={`nav-link ${activePage === 'home' ? 'active' : ''}`}
-            onClick={() => handleNavClick('home')}
+            onClick={() => setActivePage('home')}
           >
             Home
           </button>
           <button
+            type="button"
             className={`nav-link ${activePage === 'forecast' ? 'active' : ''}`}
-            onClick={() => handleNavClick('forecast')}
+            onClick={() => setActivePage('forecast')}
           >
             Forecast
           </button>
           <button
+            type="button"
             className={`nav-link ${activePage === 'about' ? 'active' : ''}`}
-            onClick={() => handleNavClick('about')}
+            onClick={() => setActivePage('about')}
           >
             About
           </button>
@@ -84,18 +79,12 @@ export const Header = ({
 
         {/* Right Header Actions */}
         <div className="header-actions">
-          {/* PWA Install App Button */}
+          {/* PWA Install App Button (Desktop only) */}
           {installPrompt && (
             <button
-              className="loc-btn"
+              type="button"
+              className="loc-btn install-btn-desktop"
               onClick={handleInstallClick}
-              style={{
-                background: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
-                color: '#ffffff',
-                border: 'none',
-                fontWeight: 600,
-                boxShadow: '0 2px 8px rgba(37, 99, 235, 0.4)'
-              }}
               title="Install SkyCast on your device"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -107,9 +96,10 @@ export const Header = ({
             </button>
           )}
 
-          {/* Current Location Button */}
+          {/* Current Location Button (Laptop / Desktop only; mobile uses bottom nav) */}
           <button
-            className="loc-btn"
+            type="button"
+            className="loc-btn desktop-loc-btn"
             onClick={onUseCurrentLocation}
             disabled={isLocating}
             title="Detect your current weather via GPS"
@@ -124,33 +114,10 @@ export const Header = ({
             </span>
           </button>
 
-          {/* Device View Mode Toggle: Laptop / Mobile */}
-          {setViewMode && (
-            <div className="view-mode-toggle" role="group" aria-label="Device View Selector">
-              <button
-                type="button"
-                className={`view-mode-btn ${viewMode === 'laptop' ? 'active' : ''}`}
-                onClick={() => setViewMode(viewMode === 'laptop' ? 'auto' : 'laptop')}
-                title="Switch to Laptop View (Widescreen Dashboard)"
-              >
-                <Laptop size={14} />
-                <span className="view-mode-text">Laptop</span>
-              </button>
-              <button
-                type="button"
-                className={`view-mode-btn ${viewMode === 'mobile' ? 'active' : ''}`}
-                onClick={() => setViewMode(viewMode === 'mobile' ? 'auto' : 'mobile')}
-                title="Switch to Mobile View (Phone Simulator)"
-              >
-                <Smartphone size={14} />
-                <span className="view-mode-text">Mobile</span>
-              </button>
-            </div>
-          )}
-
           {/* Temperature Unit Toggle (°C / °F) */}
           <div className="unit-toggle" role="group" aria-label="Temperature unit selector">
             <button
+              type="button"
               className={`unit-btn ${unit === 'C' ? 'active' : ''}`}
               onClick={() => setUnit('C')}
               aria-pressed={unit === 'C'}
@@ -158,6 +125,7 @@ export const Header = ({
               °C
             </button>
             <button
+              type="button"
               className={`unit-btn ${unit === 'F' ? 'active' : ''}`}
               onClick={() => setUnit('F')}
               aria-pressed={unit === 'F'}
@@ -165,54 +133,8 @@ export const Header = ({
               °F
             </button>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="mobile-nav-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
         </div>
       </div>
-
-      {/* Mobile Dropdown Nav Menu */}
-      {mobileMenuOpen && (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem',
-            paddingTop: '1rem',
-            paddingBottom: '0.5rem',
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            marginTop: '0.75rem',
-          }}
-        >
-          <button
-            className={`nav-link ${activePage === 'home' ? 'active' : ''}`}
-            onClick={() => handleNavClick('home')}
-            style={{ textAlign: 'left', width: '100%' }}
-          >
-            Home Dashboard
-          </button>
-          <button
-            className={`nav-link ${activePage === 'forecast' ? 'active' : ''}`}
-            onClick={() => handleNavClick('forecast')}
-            style={{ textAlign: 'left', width: '100%' }}
-          >
-            7-Day Forecast
-          </button>
-          <button
-            className={`nav-link ${activePage === 'about' ? 'active' : ''}`}
-            onClick={() => handleNavClick('about')}
-            style={{ textAlign: 'left', width: '100%' }}
-          >
-            About SkyCast
-          </button>
-        </div>
-      )}
     </header>
   );
 };

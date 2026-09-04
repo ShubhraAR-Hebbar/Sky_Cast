@@ -39,7 +39,7 @@ export const SearchBar = ({ onSearch, isLoading }) => {
           <input
             type="text"
             className="search-input"
-            placeholder="Search for a city... (e.g. Bengaluru, London, Tokyo)"
+            placeholder="Search city... (e.g. Bengaluru, London)"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             disabled={isLoading}

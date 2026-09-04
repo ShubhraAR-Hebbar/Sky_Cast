@@ -63,7 +63,7 @@ export const Home = ({
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <WeatherDetails weather={weather} unit={unit} />
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+              <div className="wind-uv-grid">
                 <Wind weather={weather} unit={unit} />
                 <UVIndex weather={weather} />
               </div>
