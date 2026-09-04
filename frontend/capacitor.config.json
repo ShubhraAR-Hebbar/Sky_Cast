@@ -1,0 +1,9 @@
+{
+  "appId": "com.skycast.weather",
+  "appName": "SkyCast",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "cleartext": true
+  }
+}

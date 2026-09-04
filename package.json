@@ -1,0 +1,24 @@
+{
+  "name": "skycast-weather-app",
+  "version": "1.0.0",
+  "description": "SkyCast - Professional Weather Web Application with React, Node.js & Express",
+  "scripts": {
+    "install:backend": "npm install --prefix backend",
+    "install:frontend": "npm install --prefix frontend",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "dev:backend": "node --watch backend/server.js",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "node run-both.js",
+    "app:build": "npm run build --prefix frontend && npx --prefix frontend cap sync",
+    "app:open": "npx --prefix frontend cap open android"
+  },
+  "keywords": [
+    "weather",
+    "skycast",
+    "react",
+    "express",
+    "openweathermap"
+  ],
+  "author": "SkyCast Team",
+  "license": "MIT"
+}
