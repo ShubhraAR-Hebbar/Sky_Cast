@@ -77,12 +77,12 @@ export const getWeatherBackground = (weather) => {
 
   // Rain or Heavy Showers
   if (cond.includes('rain')) {
-    return 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=2000&q=85'; // Atmospheric raindrops
+    return 'https://images.unsplash.com/photo-1514632595-4944383f2737?auto=format&fit=crop&w=2000&q=85'; // Atmospheric pure raindrops on transparent glass
   }
 
   // Drizzle
   if (cond.includes('drizzle')) {
-    return 'https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=2000&q=85'; // Soft misting rain drops
+    return 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=2000&q=85'; // Soft misting rain droplets on glass window
   }
 
   // Snow

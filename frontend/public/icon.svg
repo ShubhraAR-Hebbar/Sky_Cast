@@ -1,29 +1,93 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0284c7"/>
-      <stop offset="50%" stop-color="#0369a1"/>
-      <stop offset="100%" stop-color="#0f172a"/>
+    <!-- Deep Cosmic Dark Background -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
     </linearGradient>
-    <linearGradient id="sun" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fef08a"/>
-      <stop offset="100%" stop-color="#f59e0b"/>
+
+    <!-- Rainbow Gradient 1 (Outer Arc - Red to Orange) -->
+    <linearGradient id="rainbowRed" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#f97316"/>
     </linearGradient>
-    <linearGradient id="cloud" x1="0%" y1="0%" x2="0%" y2="100%">
+
+    <!-- Rainbow Gradient 2 (Yellow to Green) -->
+    <linearGradient id="rainbowYellow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+
+    <!-- Rainbow Gradient 3 (Cyan to Blue to Violet) -->
+    <linearGradient id="rainbowBlue" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+
+    <!-- Golden Sun Gradient -->
+    <radialGradient id="sunGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="40%" stop-color="#fef08a"/>
+      <stop offset="75%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </radialGradient>
+
+    <!-- Frosted Glass Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#e2e8f0"/>
+      <stop offset="50%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
     </linearGradient>
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-opacity="0.3"/>
+
+    <!-- Soft Cloud Glow Filter -->
+    <filter id="cloudShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Rainbow Glow Filter -->
+    <filter id="rainbowGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
   </defs>
-  
-  <!-- Rounded App Tile -->
-  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
-  
-  <!-- Glowing Sun -->
-  <circle cx="340" cy="180" r="75" fill="url(#sun)" filter="url(#shadow)"/>
-  
-  <!-- Stylized Cloud -->
-  <path d="M160 380 h210 a65 65 0 0 0 10-129 95 95 0 0 0-185-30 65 65 0 0 0-35 159 z" fill="url(#cloud)" filter="url(#shadow)"/>
+
+  <!-- App Rounded Tile -->
+  <rect width="512" height="512" rx="124" fill="url(#bgGrad)"/>
+  <rect width="512" height="512" rx="124" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+
+  <!-- Glowing Golden Sun Behind Cloud -->
+  <circle cx="360" cy="180" r="72" fill="url(#sunGrad)" filter="url(#rainbowGlow)"/>
+
+  <!-- Vibrant Rainbow Arcs -->
+  <g filter="url(#rainbowGlow)">
+    <!-- Arc 1: Red/Orange (Outer) -->
+    <path d="M 80,390 A 180,180 0 0 1 440,390" fill="none" stroke="url(#rainbowRed)" stroke-width="22" stroke-linecap="round"/>
+    
+    <!-- Arc 2: Yellow/Green (Middle) -->
+    <path d="M 102,390 A 158,158 0 0 1 418,390" fill="none" stroke="url(#rainbowYellow)" stroke-width="22" stroke-linecap="round"/>
+    
+    <!-- Arc 3: Cyan/Blue/Violet (Inner) -->
+    <path d="M 124,390 A 136,136 0 0 1 396,390" fill="none" stroke="url(#rainbowBlue)" stroke-width="22" stroke-linecap="round"/>
+  </g>
+
+  <!-- Ambient Rainbow Sparkles -->
+  <circle cx="150" cy="140" r="6" fill="#fde047" opacity="0.9"/>
+  <circle cx="390" cy="100" r="5" fill="#38bdf8" opacity="0.8"/>
+  <circle cx="95" cy="220" r="4" fill="#ec4899" opacity="0.8"/>
+
+  <!-- Frosted Dimensional Cloud -->
+  <g filter="url(#cloudShadow)">
+    <path d="M 155,395 
+             L 375,395 
+             A 65,65 0 0 0 380,265 
+             A 90,90 0 0 0 220,225 
+             A 70,70 0 0 0 120,335 
+             A 60,60 0 0 0 155,395 Z" 
+          fill="url(#cloudGrad)"/>
+  </g>
+
+  <!-- Gloss Highlight on Cloud -->
+  <path d="M 220,235 A 80,80 0 0 1 340,270 A 55,55 0 0 1 370,300" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
 </svg>

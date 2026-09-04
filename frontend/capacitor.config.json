@@ -2,8 +2,17 @@
   "appId": "com.skycast.weather",
   "appName": "SkyCast",
   "webDir": "dist",
-  "bundledWebRuntime": false,
   "server": {
-    "cleartext": true
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#0f172a"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0f172a"
+    }
   }
 }

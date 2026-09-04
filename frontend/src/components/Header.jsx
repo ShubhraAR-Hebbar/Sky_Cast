@@ -96,10 +96,10 @@ export const Header = ({
             </button>
           )}
 
-          {/* Current Location Button (Laptop / Desktop only; mobile uses bottom nav) */}
+          {/* Current Location Button */}
           <button
             type="button"
-            className="loc-btn desktop-loc-btn"
+            className="loc-btn header-loc-btn"
             onClick={onUseCurrentLocation}
             disabled={isLocating}
             title="Detect your current weather via GPS"
