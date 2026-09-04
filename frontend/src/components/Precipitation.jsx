@@ -41,10 +41,10 @@ export const Precipitation = ({ precipitation = [] }) => {
         })}
       </div>
 
-      <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--theme-text-muted)' }}>
+      <div className="precip-legend">
         <span>0% (Dry)</span>
         <span>50% (Likely)</span>
-        <span>100% (Continuous Rain)</span>
+        <span>100% (Rain)</span>
       </div>
     </section>
   );

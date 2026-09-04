@@ -54,13 +54,13 @@ export const Home = ({
           {/* 2-Column Responsive Dashboard Grid */}
           <div className="dashboard-grid">
             {/* Left Column: Multi-Day & Precipitation */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="dashboard-col">
               <DailyForecast daily={weather.daily} unit={unit} />
               <Precipitation precipitation={weather.precipitation} />
             </div>
 
             {/* Right Column: In-depth atmospheric metrics */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="dashboard-col">
               <WeatherDetails weather={weather} unit={unit} />
               
               <div className="wind-uv-grid">

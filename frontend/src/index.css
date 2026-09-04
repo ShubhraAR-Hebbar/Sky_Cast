@@ -255,10 +255,11 @@ a {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 1rem 1rem calc(5.25rem + env(safe-area-inset-bottom, 0px)) 1rem;
+  padding: 0.75rem 0.6rem calc(5.25rem + env(safe-area-inset-bottom, 0px)) 0.6rem;
   position: relative;
   z-index: 10;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 @media (min-width: 768px) {
@@ -274,9 +275,20 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   transition: var(--transition-smooth);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .glass-card {
+    border-radius: var(--radius-lg);
+  }
 }
 
 .glass-card:hover {
@@ -976,13 +988,24 @@ a {
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 1.15rem;
+  width: 100%;
+  min-width: 0;
 }
 
 @media (min-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
+}
+
+.dashboard-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  min-width: 0;
+  width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -991,24 +1014,35 @@ a {
 
 .daily-section {
   padding: 1.5rem;
+  min-width: 0;
 }
 
 .daily-list {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.5rem;
+  min-width: 0;
 }
 
 .daily-row {
   display: grid;
-  grid-template-columns: 90px 40px 1fr 110px;
+  grid-template-columns: 75px 32px 1fr auto;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: var(--transition-smooth);
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .daily-row {
+    grid-template-columns: 90px 40px 1fr 110px;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
 }
 
 .daily-row:hover {
@@ -1017,51 +1051,62 @@ a {
 
 .daily-day {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--theme-text-primary);
+  white-space: nowrap;
 }
 
 .daily-date {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--theme-text-muted);
+  white-space: nowrap;
 }
 
 .daily-icon-cell {
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .daily-condition-name {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--theme-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .daily-temp-bar-wrap {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: 0.4rem;
   font-family: var(--font-display);
+  flex-shrink: 0;
 }
 
 .daily-low-val {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--theme-text-muted);
   font-weight: 500;
-  width: 32px;
+  width: 28px;
   text-align: right;
 }
 
 .temp-bar-track {
-  width: 45px;
+  width: 36px;
   height: 5px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 99px;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .temp-bar-track {
+    width: 45px;
+  }
 }
 
 .temp-bar-fill {
@@ -1071,10 +1116,10 @@ a {
 }
 
 .daily-high-val {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #ffffff;
   font-weight: 700;
-  width: 32px;
+  width: 28px;
   text-align: right;
 }
 
@@ -1085,17 +1130,21 @@ a {
 .weather-details-section {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  min-width: 0;
 }
 
 .details-cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.85rem;
+  gap: 0.55rem;
+  width: 100%;
+  min-width: 0;
 }
 
 @media (min-width: 640px) {
   .details-cards-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
   }
 }
 
@@ -1103,11 +1152,13 @@ a {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-md);
-  padding: 1.1rem;
+  padding: 0.75rem 0.65rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.35rem;
   transition: var(--transition-smooth);
+  min-width: 0;
+  overflow: hidden;
 }
 
 .detail-card:hover {
@@ -1118,28 +1169,38 @@ a {
 .detail-card-header {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
+  gap: 0.35rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--theme-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detail-card-header svg {
   color: var(--theme-accent);
+  flex-shrink: 0;
 }
 
 .detail-card-val {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detail-card-desc {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--theme-text-secondary);
+  line-height: 1.3;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* --------------------------------------------------------------------------
@@ -1149,20 +1210,31 @@ a {
 .precipitation-section {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  min-width: 0;
 }
 
 .precip-chart-container {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 0.5rem;
-  height: 150px;
-  padding: 1rem 0 0.5rem;
+  gap: 0.25rem;
+  height: 135px;
+  padding: 0.75rem 0 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.precip-chart-container::-webkit-scrollbar {
+  display: none;
 }
 
 .precip-bar-group {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1171,16 +1243,16 @@ a {
 }
 
 .precip-percent-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: #38bdf8;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
 }
 
 .precip-bar-wrapper {
   width: 100%;
-  max-width: 28px;
-  height: 100px;
+  max-width: 26px;
+  height: 90px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-sm);
   display: flex;
@@ -1196,9 +1268,20 @@ a {
 }
 
 .precip-time-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--theme-text-muted);
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
+  white-space: nowrap;
+}
+
+.precip-legend {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--theme-text-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -1727,68 +1810,111 @@ a {
 /* --------------------------------------------------------------------------
    Fine-tuned Mobile Breakpoints (< 768px & < 480px)
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Fine-tuned Mobile Breakpoints (< 768px & < 480px)
+   -------------------------------------------------------------------------- */
 @media (max-width: 767px) {
   .main-content {
-    padding: 1rem 1rem calc(5.5rem + env(safe-area-inset-bottom, 0px)) 1rem !important;
+    padding: 0.65rem 0.55rem calc(5.25rem + env(safe-area-inset-bottom, 0px)) 0.55rem !important;
+  }
+
+  .glass-card {
+    border-radius: var(--radius-md) !important;
+  }
+
+  .hero-weather-card,
+  .hourly-section,
+  .daily-section,
+  .precipitation-section,
+  .weather-details-section,
+  .wind-card,
+  .uv-card,
+  .sun-card {
+    padding: 1.1rem 0.75rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .footer {
-    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+    padding: 1.5rem 0.75rem calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-weather-card {
-    padding: 1.25rem 1rem;
+  .hero-weather-card,
+  .hourly-section,
+  .daily-section,
+  .precipitation-section,
+  .weather-details-section,
+  .wind-card,
+  .uv-card,
+  .sun-card {
+    padding: 0.95rem 0.65rem !important;
   }
 
   .city-name {
-    font-size: 1.75rem;
+    font-size: 1.65rem;
   }
 
   .temp-primary {
-    font-size: 4rem;
+    font-size: 3.75rem;
   }
 
   .temp-unit-symbol {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .condition-pill {
-    font-size: 0.95rem;
-    padding: 0.3rem 0.75rem;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.65rem;
   }
 
   .feels-like-text {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .temp-high-low {
-    font-size: 0.95rem;
-    gap: 0.9rem;
+    font-size: 0.9rem;
+    gap: 0.75rem;
   }
 
   .hero-stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
+    gap: 0.45rem;
   }
 
   .hero-stat-card {
-    padding: 0.75rem;
+    padding: 0.65rem 0.55rem;
   }
 
   .hero-stat-value {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
   .hero-stat-sub {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
+  }
+
+  .details-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
+  }
+
+  .detail-card {
+    padding: 0.65rem 0.55rem;
+  }
+
+  .detail-card-val {
+    font-size: 1.2rem;
+  }
+
+  .detail-card-desc {
+    font-size: 0.68rem;
   }
 
   .daily-row {
-    grid-template-columns: 75px 32px 1fr 85px;
+    grid-template-columns: 68px 28px 1fr auto;
     gap: 0.35rem;
-    padding: 0.65rem 0.5rem;
+    padding: 0.55rem 0.5rem;
   }
 
   .daily-condition-name {
@@ -1796,23 +1922,23 @@ a {
   }
 
   .daily-day {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
 
   .daily-date {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
   }
 
   .search-input-wrapper {
-    padding: 0.35rem 0.4rem 0.35rem 0.9rem;
+    padding: 0.35rem 0.4rem 0.35rem 0.85rem;
   }
 
   .search-input {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .search-submit-btn {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.85rem;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.82rem;
   }
 }
