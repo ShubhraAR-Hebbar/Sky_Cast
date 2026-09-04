@@ -19,7 +19,16 @@
       "dest": "backend/server.js"
     },
     {
-      "handle": "filesystem"
+      "src": "/assets/(.*)",
+      "dest": "frontend/assets/$1"
+    },
+    {
+      "src": "/(manifest\\.json|icon\\.svg|sw\\.js|favicon\\.ico)",
+      "dest": "frontend/$1"
+    },
+    {
+      "src": "/(.*\\.(?:js|css|json|png|jpg|jpeg|svg|ico|webmanifest|txt))",
+      "dest": "frontend/$1"
     },
     {
       "src": "/(.*)",
