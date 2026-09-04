@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cloud, MapPin, Loader2, Menu, X, SunMedium } from 'lucide-react';
+import { Cloud, MapPin, Loader2, Menu, X, SunMedium, Laptop, Smartphone } from 'lucide-react';
 
 export const Header = ({
   activePage,
@@ -7,7 +7,9 @@ export const Header = ({
   unit,
   setUnit,
   onUseCurrentLocation,
-  isLocating
+  isLocating,
+  viewMode = 'auto',
+  setViewMode
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
@@ -121,6 +123,30 @@ export const Header = ({
               {isLocating ? 'Locating...' : 'Current Location'}
             </span>
           </button>
+
+          {/* Device View Mode Toggle: Laptop / Mobile */}
+          {setViewMode && (
+            <div className="view-mode-toggle" role="group" aria-label="Device View Selector">
+              <button
+                type="button"
+                className={`view-mode-btn ${viewMode === 'laptop' ? 'active' : ''}`}
+                onClick={() => setViewMode(viewMode === 'laptop' ? 'auto' : 'laptop')}
+                title="Switch to Laptop View (Widescreen Dashboard)"
+              >
+                <Laptop size={14} />
+                <span className="view-mode-text">Laptop</span>
+              </button>
+              <button
+                type="button"
+                className={`view-mode-btn ${viewMode === 'mobile' ? 'active' : ''}`}
+                onClick={() => setViewMode(viewMode === 'mobile' ? 'auto' : 'mobile')}
+                title="Switch to Mobile View (Phone Simulator)"
+              >
+                <Smartphone size={14} />
+                <span className="view-mode-text">Mobile</span>
+              </button>
+            </div>
+          )}
 
           {/* Temperature Unit Toggle (°C / °F) */}
           <div className="unit-toggle" role="group" aria-label="Temperature unit selector">

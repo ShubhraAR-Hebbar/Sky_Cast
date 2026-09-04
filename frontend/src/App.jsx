@@ -3,17 +3,22 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Forecast from './pages/Forecast';
 import About from './pages/About';
+import MobileNavBar from './components/MobileNavBar';
 import { fetchCityWeather, fetchCoordinateWeather } from './services/weatherService';
 import { getThemeClass, getWeatherBackground } from './utils/weatherUtils';
 
 const DEFAULT_CITY = 'Bengaluru';
 const RECENT_KEY = 'skycast_recent_searches';
 const UNIT_KEY = 'skycast_temp_unit';
+const VIEW_MODE_KEY = 'skycast_view_mode';
 
 export const App = () => {
   const [activePage, setActivePage] = useState('home');
   const [unit, setUnit] = useState(() => {
     return localStorage.getItem(UNIT_KEY) || 'C';
+  });
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem(VIEW_MODE_KEY) || 'auto';
   });
   const [weather, setWeather] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,6 +55,12 @@ export const App = () => {
   const handleUnitChange = (newUnit) => {
     setUnit(newUnit);
     localStorage.setItem(UNIT_KEY, newUnit);
+  };
+
+  // Save device view mode preference (auto / laptop / mobile)
+  const handleViewModeChange = (newMode) => {
+    setViewMode(newMode);
+    localStorage.setItem(VIEW_MODE_KEY, newMode);
   };
 
   // Fetch weather by city name
@@ -114,7 +125,7 @@ export const App = () => {
   const backgroundImage = getWeatherBackground(weather);
 
   return (
-    <div className={`app-wrapper ${themeClass}`}>
+    <div className={`app-wrapper ${themeClass} mode-${viewMode}`}>
       {/* Real-time Dynamic Weather Picture Background */}
       <div className="weather-bg-container">
         <img
@@ -126,6 +137,20 @@ export const App = () => {
         <div className="weather-bg-overlay" />
       </div>
 
+      {/* Top Banner when in Mobile Simulator Mode on Desktop */}
+      {viewMode === 'mobile' && (
+        <aside className="device-simulator-banner" aria-label="Device Simulator Alert">
+          <span>📱 Viewing in <strong>Mobile View</strong></span>
+          <button
+            type="button"
+            className="simulator-switch-btn"
+            onClick={() => handleViewModeChange('laptop')}
+          >
+            Switch to Laptop View 💻
+          </button>
+        </aside>
+      )}
+
       {/* Top Navbar */}
       <Header
         activePage={activePage}
@@ -134,38 +159,61 @@ export const App = () => {
         setUnit={handleUnitChange}
         onUseCurrentLocation={handleUseCurrentLocation}
         isLocating={isLocating}
+        viewMode={viewMode}
+        setViewMode={handleViewModeChange}
       />
 
-      {/* Main Page Content */}
-      <main className="main-content">
-        {activePage === 'home' && (
-          <Home
-            weather={weather}
-            isLoading={isLoading}
-            error={error}
-            unit={unit}
-            recentSearches={recentSearches}
-            onSearch={(city) => {
-              loadCityWeather(city);
-            }}
-            onClearRecent={handleClearRecent}
-            onRetry={() => loadCityWeather(lastQuery)}
-          />
+      {/* Main Page Content - Wrapped in Phone Simulator Frame when in Mobile Mode on Desktop */}
+      <div className={viewMode === 'mobile' ? 'phone-frame-wrapper' : 'desktop-view-wrapper'}>
+        {viewMode === 'mobile' && (
+          <div className="phone-island-notch">
+            <div className="phone-speaker" />
+            <div className="phone-lens" />
+          </div>
         )}
 
-        {activePage === 'forecast' && (
-          <Forecast weather={weather} unit={unit} />
-        )}
+        <main className={`main-content ${viewMode === 'mobile' ? 'phone-screen-content' : ''}`}>
+          {activePage === 'home' && (
+            <Home
+              weather={weather}
+              isLoading={isLoading}
+              error={error}
+              unit={unit}
+              recentSearches={recentSearches}
+              onSearch={(city) => {
+                loadCityWeather(city);
+              }}
+              onClearRecent={handleClearRecent}
+              onRetry={() => loadCityWeather(lastQuery)}
+            />
+          )}
 
-        {activePage === 'about' && (
-          <About />
-        )}
-      </main>
+          {activePage === 'forecast' && (
+            <Forecast weather={weather} unit={unit} />
+          )}
+
+          {activePage === 'about' && (
+            <About />
+          )}
+        </main>
+
+        {viewMode === 'mobile' && <div className="phone-home-indicator" />}
+      </div>
+
+      {/* Mobile Bottom Navigation Bar (Visible on mobile screens and in mobile simulator mode) */}
+      <MobileNavBar
+        activePage={activePage}
+        setActivePage={setActivePage}
+        unit={unit}
+        setUnit={handleUnitChange}
+        onUseCurrentLocation={handleUseCurrentLocation}
+        isLocating={isLocating}
+      />
 
       {/* Modern Footer */}
       <footer className="footer">
         <p>
-          © {new Date().getFullYear()} <strong>SkyCast</strong> — Real-time atmospheric intelligence. Designed with clean precision.
+          © {new Date().getFullYear()} <strong>SkyCast</strong> — Real-time atmospheric intelligence. Optimized for Mobile & Laptop.
         </p>
       </footer>
     </div>
