@@ -24,7 +24,7 @@ app.use(cors({
 app.use(express.json());
 
 // Root endpoint with helpful navigation
-app.get('/', (req, res) => {
+app.get(['/', '/api'], (req, res) => {
   res.json({
     app: 'SkyCast Weather API',
     status: 'online',
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 // API Health Check
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'online',
     app: 'SkyCast Backend API',
@@ -49,7 +49,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Weather API Routes
-app.use('/api/weather', weatherRoutes);
+app.use(['/api/weather', '/weather'], weatherRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {
