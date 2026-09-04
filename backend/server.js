@@ -23,6 +23,22 @@ app.use(cors({
 
 app.use(express.json());
 
+// Root endpoint with helpful navigation
+app.get('/', (req, res) => {
+  res.json({
+    app: 'SkyCast Weather API',
+    status: 'online',
+    frontend: 'http://localhost:5173',
+    message: 'Welcome to SkyCast API! To view the user interface, open http://localhost:5173 in your browser.',
+    endpoints: {
+      health: '/api/health',
+      weatherByCity: '/api/weather/city/:cityName',
+      weatherByQuery: '/api/weather?city=London',
+      weatherByCoords: '/api/weather/coordinates?lat=12.97&lon=77.59'
+    }
+  });
+});
+
 // API Health Check
 app.get('/api/health', (req, res) => {
   res.json({
@@ -52,7 +68,11 @@ app.use((req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🌤️ SkyCast Backend running on http://localhost:${PORT}`);
-  console.log(`API Key configured: ${Boolean(process.env.OPENWEATHER_API_KEY && process.env.OPENWEATHER_API_KEY !== 'your_api_key_here')}`);
-});
+if (process.env.VERCEL !== '1' && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  app.listen(PORT, () => {
+    console.log(`🌤️ SkyCast Backend running on http://localhost:${PORT}`);
+    console.log(`API Key configured: ${Boolean(process.env.OPENWEATHER_API_KEY && process.env.OPENWEATHER_API_KEY !== 'your_api_key_here')}`);
+  });
+}
+
+export default app;

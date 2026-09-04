@@ -1,12 +1,35 @@
 import * as weatherService from '../services/weatherService.js';
 
 /**
+ * Unified Controller to handle query-based weather requests
+ * GET /api/weather?city=London or GET /api/weather?lat=12.97&lon=77.59
+ */
+export const getWeather = async (req, res) => {
+  const { city, q, lat, lon } = req.query;
+
+  if (lat !== undefined && lon !== undefined) {
+    return getWeatherByCoordinates(req, res);
+  }
+
+  const queryCity = city || q;
+  if (queryCity) {
+    req.params.city = queryCity;
+    return getWeatherByCity(req, res);
+  }
+
+  return res.status(400).json({
+    success: false,
+    error: 'Please provide a city name (e.g. /api/weather?city=London or /api/weather/city/London) or coordinates (?lat=...&lon=...).'
+  });
+};
+
+/**
  * Controller to handle city weather requests
- * GET /api/weather/city/:city
+ * GET /api/weather/city/:city or GET /api/weather/:city
  */
 export const getWeatherByCity = async (req, res) => {
   try {
-    const { city } = req.params;
+    const city = req.params.city || req.query.city || req.query.q;
 
     if (!city || typeof city !== 'string' || city.trim().length === 0) {
       return res.status(400).json({

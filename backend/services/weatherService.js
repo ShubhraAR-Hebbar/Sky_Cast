@@ -439,11 +439,7 @@ export const fetchWeatherByCity = async (city) => {
     try {
       return await fetchFromOpenWeatherMap(`q=${encodeURIComponent(city)}`, apiKey);
     } catch (err) {
-      // If 404, throw city not found
-      if (err.response?.status === 404) {
-        throw new Error('City not found. Please check the spelling.');
-      }
-      console.warn('OpenWeatherMap API request failed, trying fallback:', err.message);
+      console.warn(`OpenWeatherMap request for "${city}" failed (${err.response?.status || err.message}), trying fallback...`);
     }
   }
 
